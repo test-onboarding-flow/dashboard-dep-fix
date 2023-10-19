@@ -370,7 +370,7 @@ const tableData1: TableProps = {
         },
         {
             id: '1',
-            value: '',
+            value: 'Test 3',
             size: 'xs',
             tooltipConfig: {
                 content: 'Not a ID of the variable',
@@ -381,7 +381,7 @@ const tableData1: TableProps = {
         },
         // {
         //     id: '1111',
-        //     value: '',
+        //     value: 'Test 3',
         // },
     ],
     body: [
@@ -643,9 +643,9 @@ export default function SavedVariablesView({
             ) : (
                 // <VariablesList variablesList={variablesList} />
                 <>
-                    <div className="mxh-504">
+                    {/* <div className="mxh-504">
                         <Table {...tableData2} />
-                    </div>
+                    </div> */}
                     <Table {...tableData1} />
 
                     {/* <div

@@ -12,10 +12,10 @@ function isDataWithTooltipConfig(data: TableCellProps['cellData']): data is Tabl
 }
 
 export const TableCell = (props: TableCellProps) => {
-    const { cellData, colSpan } = props
+    const { cellData } = props
 
     return (
-        <td className="dc-table__cell dc__ellipsis-right" colSpan={colSpan}>
+        <div className="dc-table__cell dc__ellipsis-right">
             {isDataWithTooltipConfig(cellData) ? (
                 <Tippy
                     content={cellData.tooltipConfig.content}
@@ -27,6 +27,6 @@ export const TableCell = (props: TableCellProps) => {
             ) : (
                 cellData
             )}
-        </td>
+        </div>
     )
 }

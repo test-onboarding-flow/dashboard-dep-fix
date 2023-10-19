@@ -1,31 +1,133 @@
-@mixin column-width($width) {
-    width: #{$width}px;
-    max-width: #{$width}px;
-}
+// @mixin column-width($width) {
+//     width: #{$width}px;
+//     max-width: #{$width}px;
+// }
+
+// .dc-table {
+//     $parent-selector: &;
+
+//     width: 100%;
+//     // table-layout: fixed;
+//     // position: relative;
+
+//     &__head {
+//         position: sticky;
+//         top: 0;
+//         z-index: 1;
+//         // Table uses collapsed border which are not visible with position sticky hence using box-shadow as a border
+//         box-shadow: 0 0 0 1px var(--N200);
+
+//         > tr {
+//             background: var(--N0);
+//             border-bottom: none;
+
+//             &:hover {
+//                 background-color: var(--N0);
+//                 cursor: auto;
+//             }
+//         }
+//     }
+
+//     &__header-cell {
+//         color: var(--N700);
+//         font-size: 12px;
+//         font-weight: 600;
+//         line-height: 20px;
+//         text-transform: uppercase;
+//         padding-inline: 8px;
+//         position: sticky;
+
+//         & .sort {
+//             background-repeat: no-repeat;
+//         }
+
+//         &--xs {
+//             @include column-width(50);
+//         }
+
+//         &--sm {
+//             @include column-width(100);
+//         }
+
+//         &--md {
+//             @include column-width(200);
+//         }
+
+//         &--lg {
+//             @include column-width(300);
+//         }
+
+//         &--xl {
+//             @include column-width(400);
+//         }
+
+//     }
+
+//     &__row {
+
+//         > th, td {
+//             &:first-child {
+//                 padding-left: 20px;
+//             }
+
+//             &:last-child {
+//                 padding-right: 20px;
+//             }
+//         }
+
+//         > th {
+//             padding-block: 6px;
+//         }
+
+//         > td {
+//             padding-block: 10px;
+//         }
+
+//         &:hover {
+//             background-color: var(--N50);
+//             cursor: pointer;
+//             position: relative;
+
+//             // TODO: Handle action buttons
+//             #{$parent-selector}__action-buttons {
+//                 display: block;
+//                 position: absolute;
+//                 right: 10px;
+//             }
+
+//         }
+//     }
+
+//     &__cell {
+//         color: var(--N900);
+//         font-size: 13px;
+//         font-weight: 400;
+//         line-height: 20px;
+//         padding-inline: 8px;
+//     }
+
+//     &__action-buttons {
+//         display: none;
+//     }
+// }
 
 .dc-table {
     $parent-selector: &;
 
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "header" "body";
     width: 100%;
-    table-layout: fixed;
-    position: relative;
 
-    &__head {
-        position: sticky;
-        top: 0;
-        z-index: 1;
-        // Table uses collapsed border which are not visible with position sticky hence using box-shadow as a border
-        box-shadow: 0 0 0 1px var(--N200);
-
-        > tr {
-            background: var(--N0);
-            border-bottom: none;
-
-            &:hover {
-                background-color: var(--N0);
-                cursor: auto;
-            }
-        }
+    &__header {
+        display: grid;
+        grid-area: header;
+        // TODO: Add position sticky
+        background: var(--N0);
+        border-bottom: 1px solid var(--N200);
+        padding: 6px 20px;
+        column-gap: 16px;
     }
 
     &__header-cell {
@@ -34,38 +136,24 @@
         font-weight: 600;
         line-height: 20px;
         text-transform: uppercase;
-        padding-inline: 8px;
-        position: sticky;
+        // padding-inline: 8px;
+        // position: sticky;
 
         & .sort {
             background-repeat: no-repeat;
         }
+    }
 
-        &--xs {
-            @include column-width(50);
-        }
-
-        &--sm {
-            @include column-width(100);
-        }
-
-        &--md {
-            @include column-width(200);
-        }
-
-        &--lg {
-            @include column-width(300);
-        }
-
-        &--xl {
-            @include column-width(400);
-        }
-
+    &__body {
+        display: grid;
+        grid-area: body;
+        // gap: 16px;
     }
 
     &__row {
+        display: contents;
 
-        > th, td {
+        #{$parent-selector}__cell {
             &:first-child {
                 padding-left: 20px;
             }
@@ -75,26 +163,21 @@
             }
         }
 
-        > th {
-            padding-block: 6px;
-        }
-
-        > td {
-            padding-block: 10px;
-        }
-
         &:hover {
-            background-color: var(--N50);
+            // background-color: var(--N50);
             cursor: pointer;
             position: relative;
 
-            // TODO: Handle action buttons
-            #{$parent-selector}__action-buttons {
-                display: block;
-                position: absolute;
-                right: 10px;
+            #{$parent-selector}__cell {
+                background-color: var(--N50);
             }
 
+            // TODO: Handle action buttons
+            // #{$parent-selector}__action-buttons {
+            //     display: block;
+            //     position: absolute;
+            //     right: 10px;
+            // }
         }
     }
 
@@ -103,10 +186,7 @@
         font-size: 13px;
         font-weight: 400;
         line-height: 20px;
-        padding-inline: 8px;
-    }
-
-    &__action-buttons {
-        display: none;
+        // TODO: Fix padding
+        padding: 10px 8px;
     }
 }

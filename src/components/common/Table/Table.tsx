@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { CSSProperties, useState } from 'react'
 
-import { GenericEmptyState } from '@devtron-labs/devtron-fe-common-lib'
+import { GenericEmptyState, Grid } from '@devtron-labs/devtron-fe-common-lib'
 
 import { TableHeaderCell } from './TableHeaderCell'
 import { TableRow } from './TableRow'
@@ -50,8 +50,20 @@ const getRequestedSortOrder = ({ clickedHeaderCellId, sortedHeaderCellId, curren
  * - Override the `dc-table__header-cell--{size}` for customizing the column widths, where size can be 'xs', 'sm', 'md', 'lg' or 'xl'.
  * - The component handles the sorting order but the state needs to handled using callback.
  */
-export const Table = (props: TableProps) => {
-    const { actionButtons, headers, body, onRowClick, sortConfig, emptyStateProps } = props
+export const Table = (
+    props: TableProps & {
+        gridTemplateColumns?: CSSProperties['gridTemplateColumns']
+    },
+) => {
+    const {
+        actionButtons,
+        headers,
+        body,
+        onRowClick,
+        sortConfig,
+        emptyStateProps,
+        gridTemplateColumns = `repeat(${headers.length}, minmax(0, 1fr))`,
+    } = props
     const [currentHoveredRow, setCurrentHoveredRow] = useState<TableBodyConfig['id']>()
 
     const handleHover = (e, { id: rowId, eventType }: { id: TableBodyConfig['id']; eventType: 'enter' | 'leave' }) => {
@@ -60,44 +72,44 @@ export const Table = (props: TableProps) => {
 
     return (
         <div className="dc__overflow-scroll max-w-100 max-h-100">
-            <table className="dc-table">
-                <thead className="dc-table__head">
-                    <TableRow>
-                        {headers.map((header) => (
-                            <TableHeaderCell
-                                key={`header-cell-${header.id}`}
-                                {...header}
-                                onClick={
-                                    header.isSortable
-                                        ? (e) =>
-                                              sortConfig?.sortFunction?.(e, {
+            <div className="dc-table">
+                <div
+                    className="dc-table__header"
+                    style={{
+                        gridTemplateColumns,
+                    }}
+                >
+                    {headers.map((header) => (
+                        <TableHeaderCell
+                            key={header.id}
+                            {...header}
+                            onClick={
+                                header.isSortable
+                                    ? (e) =>
+                                          sortConfig?.sortFunction?.(e, {
+                                              clickedHeaderCellId: header.id,
+                                              requestedSortOrder: getRequestedSortOrder({
                                                   clickedHeaderCellId: header.id,
-                                                  requestedSortOrder: getRequestedSortOrder({
-                                                      clickedHeaderCellId: header.id,
-                                                      sortedHeaderCellId: sortConfig.sortedHeaderCellId,
-                                                      currentSortOrder: sortConfig.order,
-                                                  }),
-                                              })
-                                        : undefined
-                                }
-                                sortOrder={sortConfig.sortedHeaderCellId === header.id ? sortConfig.order : undefined}
-                            />
-                        ))}
-                        {/* {actionButtons?.length > 0 && (
-                            <th
-                                key="header-cell-action-buttons"
-                                className="dc-table__header-cell dc-table__header-cell--xs dc-table__action-buttons"
-                            ></th>
-                        )} */}
-                    </TableRow>
-                </thead>
-                <tbody className="dc-table__body">
-                    {body.length === 0 ? (
-                        <tr>
-                            <TableCell colSpan={headers.length} cellData={<GenericEmptyState {...emptyStateProps} />} />
-                        </tr>
-                    ) : (
-                        body.map((row) => {
+                                                  sortedHeaderCellId: sortConfig.sortedHeaderCellId,
+                                                  currentSortOrder: sortConfig.order,
+                                              }),
+                                          })
+                                    : undefined
+                            }
+                            sortOrder={sortConfig.sortedHeaderCellId === header.id ? sortConfig.order : undefined}
+                        />
+                    ))}
+                </div>
+                {body.length === 0 ? (
+                    <div>No Results</div>
+                ) : (
+                    <div
+                        className="dc-table__body"
+                        style={{
+                            gridTemplateColumns,
+                        }}
+                    >
+                        {body.map((row) => {
                             // Check for object based row configuration
                             const isRowDataArray = Array.isArray(row.data)
                             return (
@@ -119,22 +131,14 @@ export const Table = (props: TableProps) => {
                                         ? row.data
                                         : row.data({ rowId: row.id, isHovered: currentHoveredRow === row.id })
                                     ).map((cellData, index) => (
-                                        <TableCell key={`row-${row.id}-cell-${index}`} cellData={cellData} />
+                                        <TableCell key={`${row.id}-${index}`} cellData={cellData} />
                                     ))}
-                                    {/* TODO: This is broken on displaying action buttons */}
-                                    {actionButtons?.length > 0 && (
-                                        <div className="dc-table__action-buttons">
-                                            {actionButtons.map((actionButton) =>
-                                                actionButton.getActionButton({ rowId: row.id }),
-                                            )}
-                                        </div>
-                                    )}
                                 </TableRow>
                             )
-                        })
-                    )}
-                </tbody>
-            </table>
+                        })}
+                    </div>
+                )}
+            </div>
         </div>
     )
 }

@@ -92,6 +92,7 @@ export interface TableHeaderCellProps {
      * 
      * Note: It controls the size of the whole column
      */
+    // TODO: REMOVE
     size?: TableSize;
     /**
      * Configuration for the tooltip for the header cell
@@ -145,7 +146,8 @@ export interface TableCellProps {
     /**
      * To make a cell span over multiple columns
      */
-    colSpan?: number;
+    // TODO: Remove
+    // colSpan?: number;
     actionButtons?: ActionButton[];
 }
 

@@ -37,12 +37,11 @@ const CellContentWithTooltip = (
 }
 
 export const TableHeaderCell = (props: TableHeaderCellProps) => {
-    const { value, size, tooltipConfig, onClick, isSortable, sortOrder } = props
+    const { value, tooltipConfig, onClick, isSortable, sortOrder } = props
     const CellContent = () => <div className="dc__ellipsis-right">{value}</div>
-    const cellSizeClass = size ? `dc-table__header-cell--${size}` : ''
 
     return (
-        <th className={`dc-table__header-cell ${!!onClick ? 'cursor' : ''} ${cellSizeClass}`} onClick={onClick}>
+        <div className={`dc-table__header-cell ${!!onClick ? 'cursor' : ''}`} onClick={onClick}>
             {!!tooltipConfig ? (
                 <CellContentWithTooltip {...tooltipConfig} isSortable={isSortable} sortOrder={sortOrder}>
                     <CellContent />
@@ -50,6 +49,6 @@ export const TableHeaderCell = (props: TableHeaderCellProps) => {
             ) : (
                 <CellContent />
             )}
-        </th>
+        </div>
     )
 }
