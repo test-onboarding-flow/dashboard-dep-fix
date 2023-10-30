@@ -37,6 +37,7 @@ const V2Details = lazy(() => import('../../v2/index'))
 const GlobalConfig = lazy(() => import('../../globalConfigurations/GlobalConfiguration'))
 const BulkActions = lazy(() => import('../../deploymentGroups/BulkActions'))
 const BulkEdit = lazy(() => import('../../bulkEdits/BulkEdits'))
+const ResourceCatalog = lazy(() => import('../../ResourceCatalog/ResourceCatalog'))
 const OnboardingGuide = lazy(() => import('../../onboardingGuide/OnboardingGuide'))
 const DevtronStackManager = lazy(() => import('../../v2/devtronStackManager/DevtronStackManager'))
 const ClusterNodeContainer = lazy(() => import('../../ClusterNodes/ClusterNodeContainer'))
@@ -374,7 +375,16 @@ export default function NavigationRoutes() {
                                             <Route key={URLS.APPLICATION_GROUP} path={URLS.APPLICATION_GROUP}>
                                                 <AppGroupRoute isSuperAdmin={isSuperAdmin} />
                                             </Route>,
-                                            <Route key={URLS.CHARTS} path={URLS.CHARTS} render={() => <Charts isSuperAdmin={isSuperAdmin} />} />,
+                                            <Route
+                                                key={URLS.RESOURCE_CATALOG}
+                                                path={URLS.RESOURCE_CATALOG}
+                                                render={() => <ResourceCatalog isSuperAdmin={isSuperAdmin} />}
+                                            />,
+                                            <Route
+                                                key={URLS.CHARTS}
+                                                path={URLS.CHARTS}
+                                                render={() => <Charts isSuperAdmin={isSuperAdmin} />}
+                                            />,
                                             <Route
                                                 key={URLS.DEPLOYMENT_GROUPS}
                                                 path={URLS.DEPLOYMENT_GROUPS}

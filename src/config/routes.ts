@@ -12,6 +12,7 @@ export const URLS = {
     JOB: '/job',
     CREATE_JOB: 'create-job',
     APPLICATION_GROUP: '/application-group',
+    RESOURCE_CATALOG: '/resource-catalog',
     RESOURCE_BROWSER: '/resource-browser',
     EXTERNAL_APPS: 'ea',
     DEVTRON_CHARTS: 'dc',

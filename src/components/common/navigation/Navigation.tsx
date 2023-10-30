@@ -29,6 +29,15 @@ import { getLoginInfo } from '@devtron-labs/devtron-fe-common-lib'
 
 const NavigationList = [
     {
+        title: 'Dashboard',
+        dataTestId: 'click-on-dashboard',
+        type: 'link',
+        iconClass: 'nav-short-apps',
+        icon: ApplicationsIcon,
+        href: URLS.RESOURCE_CATALOG,
+        isAvailableInEA: true,
+    },
+    {
         title: 'Applications',
         dataTestId: 'click-on-application',
         type: 'link',
@@ -199,12 +208,8 @@ export default class Navigation extends Component<
             return
         }
         try {
-            const { result: trivyResponse } = await getModuleInfo(
-                ModuleNameMap.SECURITY_TRIVY,true
-            )
-            const { result: clairResponse } = await getModuleInfo(
-               ModuleNameMap.SECURITY_CLAIR,true
-            )
+            const { result: trivyResponse } = await getModuleInfo(ModuleNameMap.SECURITY_TRIVY, true)
+            const { result: clairResponse } = await getModuleInfo(ModuleNameMap.SECURITY_CLAIR, true)
             if (clairResponse?.status === ModuleStatus.INSTALLED) {
                 this.props.installedModuleMap.current = {
                     ...this.props.installedModuleMap.current,
