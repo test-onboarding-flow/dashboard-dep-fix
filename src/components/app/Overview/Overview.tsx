@@ -481,6 +481,9 @@ export default function AppOverview({ appMetaInfo, getAppMetaInfoRes, filteredEn
                             isUpdateModalOpen={isUpdateDependencyModalOpen}
                             toggleUpdateModalOpen={toggleUpdateDependencyModal}
                             toggleButtonDisabledState={setIsEditDependencyButtonDisabled}
+                            filteredEnvIds={filteredEnvIds}
+                            // Explicitly added to remount the component so that the environments are handled 
+                            key={filteredEnvIds}
                         />
                     ) : null,
             }
